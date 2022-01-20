@@ -1,4 +1,5 @@
 // Global variables
+
 let map;
 let lat = 34;
 let lon = -118;
@@ -7,7 +8,7 @@ let zl = 9;
 let geojsonPath = 'https://raw.githubusercontent.com/LCIWaterProjects/DRAFT-LA-County-Governance-Map/main/data/TableEdit.g__.geojson';
 let geojson_data;
 let geojson_layer;
-let lacountypath = 'https://raw.githubusercontent.com/LCIWaterProjects/DRAFT-LA-County-Governance-Map/main/data/LA%20County%20Projected.geojson'
+let govtable_data = 'https://raw.githubusercontent.com/LCIWaterProjects/lacwatergovmap/main/GovTable.csv'
 
 let brew = new classyBrew();
 let legend = L.control({position: 'bottomleft'});
@@ -1802,4 +1803,3 @@ function TutorialOn() {
 function TutorialOff() {
             document.getElementById("Tutorialoverlay").style.display = "none";
                                                                   }               
-                                                       
