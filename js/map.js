@@ -8,7 +8,7 @@ let zl = 9;
 let geojsonPath = 'https://raw.githubusercontent.com/LCIWaterProjects/DRAFT-LA-County-Governance-Map/main/data/TableEdit.g__.geojson';
 let geojson_data;
 let geojson_layer;
-let govtable_data = 'https://raw.githubusercontent.com/LCIWaterProjects/lacwatergovmap/main/GovTable.csv'
+let govtablepath = "data/GovTable.csv";
 
 let brew = new classyBrew();
 let legend = L.control({position: 'bottomleft'});
@@ -1678,6 +1678,7 @@ function zoomTo(geoid){
 }
 
 function createTable(){
+
 
 	// empty array for our data
 	let datafortable = [];
