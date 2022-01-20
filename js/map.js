@@ -8,7 +8,8 @@ let zl = 9;
 let geojsonPath = 'https://raw.githubusercontent.com/LCIWaterProjects/DRAFT-LA-County-Governance-Map/main/data/TableEdit.g__.geojson';
 let geojson_data;
 let geojson_layer;
-let govtablepath = "data/GovTable.csv";
+
+
 
 let brew = new classyBrew();
 let legend = L.control({position: 'bottomleft'});
@@ -55,6 +56,7 @@ function createMap(lat,lon,zl){
 }
 
 
+
 // function to get the geojson data
     $.getJSON(geojsonPath,function(data){
         
@@ -65,7 +67,7 @@ function createMap(lat,lon,zl){
         // call the map function
         mapGeoJSON(fieldtomap,5,'YlOrRd','quantiles');
     })
-
+   
 function mapGeoJSON(field,num_classes,color,scheme){
 
     // clear layers in case it has been mapped already
@@ -101,7 +103,7 @@ function mapGeoJSON(field,num_classes,color,scheme){
     // turning off fit bounds so that we stay in mainland USA
     // map.fitBounds(geojson_layer.getBounds())
 
-
+  
     // create the legend
     createLegend();
 
