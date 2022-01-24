@@ -1,6 +1,6 @@
 body,html {
     margin:0;
-    height:115%;
+    height:100%;
     width:100%;
 }
 
@@ -16,7 +16,7 @@ body {
     grid-template-rows: 60px 1fr ;
     grid-template-columns: 300px 1fr;
     grid-template-areas: 
-    "header header header"
+    "header header headerbuttons"
     "sidebar content content"
     "sidebar content content"
     "footer footer footer";
@@ -30,6 +30,8 @@ body {
     background-color: #005687;
     color: white;
     font-size: 2em;
+    max-width: 50%;
+    z-index: 1;
 
 }
 .headerbuttons {
@@ -39,6 +41,7 @@ body {
     background-color: #005687;
     color: white;
     font-size: 2em;
+    max-width: 100%;
 
 }
 
@@ -106,6 +109,7 @@ a{
     background-color: #E0E0E0;
 }
 
+
 .Newdashboard {
     grid-area: dashboard;
     max-width: 200;
@@ -117,6 +121,7 @@ a{
 .content {
     grid-area: content;
     resize: none;
+    max-height: 700;
     overflow: clip;
    
 }
@@ -127,13 +132,13 @@ a{
     background-color: #005687;
     color: rgb(255, 255, 255);
     overflow: auto;
-    max-height: 100;
+    max-height: 200;
     border-style:solid;
     border-width: thin;
     border-color: #E0E0E0;
 }
 
-.footertable {
+/* .footertable {
     grid-area: footer;
     padding: 10px;
     background-color: #005687;
@@ -141,9 +146,9 @@ a{
     overflow: auto;
     min-width: 300px;
     column-width: 2000px;
-    height: 1000px;
+    height: 1000px; */
 
-}
+
 .jsgrid-header-cell{
     min-width: 200px;
 }
@@ -261,6 +266,8 @@ b {
 /* Fonts */
 .header {font-family: Verdana, Geneva, Tahoma, sans-serif;}
 .header {font-size: 180%;}
+.headerbuttons {font-family: Verdana, Geneva, Tahoma, sans-serif;}
+.headerbuttons {font-size: 150%;} 
 .sidebar-item {font-family: Verdana, Geneva, Tahoma, sans-serif;}
 .sidebar {font-family: Verdana, Geneva, Tahoma, sans-serif;}
 .sidebar-item {font-size: 80%;}
@@ -268,6 +275,7 @@ b {
 .footer{font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: 100%;}
 .footertable{font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: 100%;}
 #text{font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: 100%;}
+#Introtext{font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: 100%;}
 
 /* Dropdown Button */
 .dropbtn {
@@ -394,4 +402,9 @@ b {
                 transform: translate(-50%,-50%);
                 -ms-transform: translate(-50%,-50%);}
       
-
+.links{
+    font-size: 18px;
+  line-height: 1em;
+   
+ 
+}

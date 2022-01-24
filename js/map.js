@@ -5,16 +5,16 @@ let lat = 34;
 let lon = -118;
 let zl = 9;
 
-let geojsonPath = 'https://raw.githubusercontent.com/LCIWaterProjects/DRAFT-LA-County-Governance-Map/main/data/TableEdit.g__.geojson';
+let geojsonPath = 'https://raw.githubusercontent.com/LCIWaterProjects/lacwatergovmap/main/data/LAC_Water_Data.geojson';
 let geojson_data;
 let geojson_layer;
-
-
+let govjsonpath ='https://raw.githubusercontent.com/LCIWaterProjects/lacwatergovmap/main/data/GovTable%20(1).json';
+let tabledata;
 
 let brew = new classyBrew();
 let legend = L.control({position: 'bottomleft'});
 let info_panel = L.control();
-let fieldtomap = 'GovernanceCode' ;
+let fieldtomap = 'GovCode' ;
 let fieldtype='choropleth'
 
 
@@ -55,12 +55,9 @@ function createMap(lat,lon,zl){
    
 }
 
-
-
 // function to get the geojson data
     $.getJSON(geojsonPath,function(data){
         
-
         // put the data in a global variable
         geojson_data = data;
 
@@ -103,7 +100,7 @@ function mapGeoJSON(field,num_classes,color,scheme){
     // turning off fit bounds so that we stay in mainland USA
     // map.fitBounds(geojson_layer.getBounds())
 
-  
+
     // create the legend
     createLegend();
 
@@ -111,15 +108,17 @@ function mapGeoJSON(field,num_classes,color,scheme){
     createInfoPanel();
 
     //create table
-    createTable();
+    // createTable();
 
  
-}//original getstyle commented out
+}
+
+//original getstyle commented out
 //function getStyle(feature){return {stroke: true,color: 'white', weight: 1, fill: true,fillColor: brew.getColorInRange(feature.properties[fieldtomap]),fillOpacity: 0.8}}
 
 //Coding for English Data
 function getStyle(feature){
-    if(fieldtomap == 'GovernanceCode'){
+    if(fieldtomap == 'GovCode'){
         return {
             stroke: true,
             color: 'white',
@@ -144,7 +143,7 @@ function getStyle(feature){
                               
         }
      }
-     else if(fieldtomap == 'MechanismCode'){
+     else if(fieldtomap == 'New_MechCo'){
         return {
             stroke: true,
             color: 'white',
@@ -156,9 +155,10 @@ function getStyle(feature){
 
         function getColor(d) {
 
-            return d == 3  ? '#CECfC7' :
-                   d == 2  ? '#F3A712' :
-                   d == 1  ? '#E4572E':
+            return d == 0  ? '#CECfC7' :
+                   d == 3  ? '#F3A712' :
+                   d == 2  ? '#E4572E':
+                   d == 1  ? '#64B6AC':
                                 '#8CB369';
                               
         }
@@ -269,7 +269,7 @@ function getStyle(feature){
                          '#412722';
         }
     }
-    else if(fieldtomap == 'RiskCode_FiveMCL'){
+    else if(fieldtomap == 'FiveMCL'){
         return {
             stroke: true,
             color: 'white',
@@ -291,7 +291,7 @@ function getStyle(feature){
                          '#CECFC7';
         }
     }
-    else if(fieldtomap == 'Operator Below Required'){
+    else if(fieldtomap == 'OperatorBe'){
         return {
             stroke: true,
             color: 'white',
@@ -303,12 +303,13 @@ function getStyle(feature){
 
         function getColor(d) {
 
-            return  d == 1 ? '#FA0F36' :
+            return  d == 2  ? '#FA0F36' :
+            d == 1 ? '#028090' :
             d == 0  ? '#ABB4C4' :
                          '#412722';
         }
     }
-    else if(fieldtomap == 'No operator'){
+    else if(fieldtomap == 'PWS_Code'){
         return {
             stroke: true,
             color: 'white',
@@ -320,8 +321,13 @@ function getStyle(feature){
 
         function getColor(d) {
 
-            return  d == 1 ? '#FA0F36' :
-            d == 0  ? '#ABB4C4' :
+            return  d == 5 ? '#B3AF8F' :
+            d == 4  ? '#FFC482' :
+            d == 3  ? '#66999B' :
+            d == 2  ? '#2B3A67' :
+            d == 1  ? '#89A7BD' :
+            d == 0  ? '#CECFC7' :
+
                          '#412722';
         }
     }
@@ -515,7 +521,7 @@ function createLegend(){
 
         //Coding for English Legends
 
-        if(fieldtomap == 'GovernanceCode'){
+        if(fieldtomap == 'GovCode'){
             div.innerHTML =
             '<b>Water System <br>Governance Type</b><br>'+
             '<div style="background-color: #6C91BF"></div>City/Municpal<br>' +
@@ -531,12 +537,15 @@ function createLegend(){
             
     
         }
-        else if(fieldtomap == 'MechanismCode'){
+        else if(fieldtomap == 'New_MechCo'){
             div.innerHTML =
-            '<div style="background-color: #CECFC7"></div>No Data<br>'+
+            
             '<b>How Is Leadership Chosen?</b><br>'+
-            '<div style="background-color: #E4572E"></div>Election<br>'+
+            '<div style="background-color: #CECFC7"></div>No Data<br>'+
+            '<div style="background-color: #64B6AC"></div> Municipal Election<br>'+
+            '<div style="background-color: #E4572E"></div> Stakeholder Election<br>'+
             '<div style="background-color: #F3A712"></div>Appointment<br>'
+           
            
             return div;
             console.log('mapping mechanism code')
@@ -578,13 +587,15 @@ function createLegend(){
         }
         else if(fieldtomap == 'WaterBill'){
             div.innerHTML =
-            '<div style="background-color: #CECFC7"></div>No Data<br>'+
+            
             '<b>Average Water<br> Bill</b><br>'+
+            '<div style="background-color: #CECFC7"></div>No Data<br>'+
             '<div style="background-color: #F5B7B9"></div>$0 - $38<br>'+
             '<div style="background-color: #EE8185"></div>$38 -$57<br>'+
             '<div style="background-color: #E74B51"></div>$57 - $72<br>'+
             '<div style="background-color: #D71D24"></div>$72 - $90<br>'+
             '<div style="background-color: #A4161A"></div>Over $90<br>'
+           
             
 
             return div;
@@ -614,7 +625,7 @@ function createLegend(){
 
 
         }
-        else if(fieldtomap == 'RiskCode_RiskCode'){
+        else if(fieldtomap == 'RiskCode'){
             div.innerHTML =
             '<b>Risk Score</b><br>'+
             '<div style="background-color: #CECFC7"></div>Not In Risk Assessment<br>' +
@@ -631,12 +642,12 @@ function createLegend(){
 
 
         }
-        else if(fieldtomap == 'Operator Below Required'){
+        else if(fieldtomap == 'OperatorBe'){
             div.innerHTML =
             '<b>Does My System Operator Meet Requirements?</b><br>'+
-            '<div style="background-color: #FA0F36"></div>No<br>' +
-            '<div style="background-color: #ABB4C4"></div>Yes<br>' 
-            
+            '<div style="background-color: #FA0F36"></div>This system has no operator<br>' +
+            '<div style="background-color: #028090"></div>The operator is below certification<br>' +
+            '<div style="background-color: #ABB4C4"></div>This operator meets certficiations<br>' 
 
 
             return div;
@@ -645,11 +656,15 @@ function createLegend(){
 
 
         }
-        else if(fieldtomap == 'No operator'){
+        else if(fieldtomap == 'PWS_Code'){
             div.innerHTML =
-            '<b>Does My Water System Have An Operator?</b><br>'+
-            '<div style="background-color: #FA0F36"></div>No<br>' +
-            '<div style="background-color: #ABB4C4"></div>Yes<br>' 
+            '<b>Primary Water Source</b><br>'+
+            '<div style="background-color: #CECFC7"></div>No Data<br>' +
+            '<div style="background-color: #2B3A67"></div>Groundwater<br>' +
+            '<div style="background-color: #89A7BD"></div>Purchased Surface Water<br>' +
+            '<div style="background-color: #66999B"></div>Surface Water<br>' +
+            '<div style="background-color: #B3AF8F"></div>Purchased Groundwater<br>' +
+            '<div style="background-color: #FFC482"></div>Groundwater Under Influence of Surface Water<br>' 
             
 
 
@@ -659,7 +674,7 @@ function createLegend(){
 
 
         }
-        else if(fieldtomap == 'RiskCode_FiveMCL'){
+        else if(fieldtomap == 'FiveMCL'){
             div.innerHTML =
             '<b>Number of Water System Violations</b><br>'+
             '<div style="background-color: #CECFC7"></div>No Data <br>' +
@@ -816,7 +831,7 @@ function createLegend(){
                 }
                 
                 div.innerHTML =
-              '<b>Data Legend <b>Data Legend in Spanish'
+              '<b>Data Legend <b>'
                
                 return div;
             }; 
@@ -842,363 +857,286 @@ function createInfoPanel(){
         // if feature is highlighted
         //English Info Panel Code here 
         if(properties){
-            this._div.innerHTML =`<br><b> ${properties['Name']}</b>`
-            if(fieldtomap == 'GovernanceCode'){
+            this._div.innerHTML =`<br><b> ${properties['name']}</b>`
+            if(fieldtomap == 'GovCode'){
             this._div.innerHTML =`
-            <p style="color:black;font-size:14px;line-height:1.5em;overflow:auto;">
-            <b>${properties['Name']}</b>
-            <br><a href="https://innovation.luskin.ucla.edu/" target="_blank">Water System Website</a>
+            <p style="color:black;font-size:14px;line-height:1em;">
+            <b>${properties['name']}</b>
+            <br><a href="${properties['URL']}"target="_blank"><div class="links">Water System Website</a></div>
             <br>Water Systems are required to publish Consumer Confidence Reports that report water sources and water quality results for regulated contaminants. 
-            <br><a href="https://innovation.luskin.ucla.edu/" target="_blank">Consumer Confidence Report</a>
-            <br><b>Service Connections</b> ${properties['Service Connections']}
-            <br><b>System Population:</b> ${properties['TableData_Population']}
-            <br><b>Median Household Income:</b>
+            <br><a href="https://innovation.luskin.ucla.edu/target="_blank"><div class="links">Consumer Confidence Report</a></div>
+            <br><b>Service Connections</b> ${properties['Connections']}
+            <br><b>System Population:</b> ${properties['TableData_']}
+            <br><b>Median Household Income:</b> $${properties['Median']}
             <br>
             <br><b>Governance Information</b>
             <br>To learn more about governance types read the 
-            <br><a href="https://innovation.luskin.ucla.edu/" target="_blank">LA County Water System Performance Guide</a>
-            <br><b>Governance Type:</b> ${properties['GovernanceType']}
-            <br><b>How Leadership is Chosen:</b> ${properties['Mechanism']}
-            <br><b>Next Election Year:</b> ${properties['UpcomingElectionYear']}
+            <br><a href="https://innovation.luskin.ucla.edu/" target="_blank"><div class="links">LA County Water System Performance Guide</a></div>
+            <br><b>Governance Type:</b> ${properties['GovType']}
+            <br><b>Governing Body:</b> ${properties['GoverningB']}
+            <br><b>How Leadership is Chosen:</b> ${properties['New_Mechan']}
+            <br><b> Average Compensation for Leadership:</b> $${properties['AvgComp']}
+            <br><b>Next Election Year:</b> ${properties['Upcoming Election Year']}
             <br>
-            <br><b>Water System Leadership</b>
-            <br>The table below displays the top three leadership roles if this information available. For full water system leadership data visit the data page. 
-            <table style="width:100%","text-align:left">
-  <tr>
-    <th>Name</th>
-    <th>Role</th>
-    <th>Compensation</th>
-  </tr>
-  <tr>
-    <td>John Clairday</td>
-    <td>President</td>
-    <td>$23,000</td>
-  </tr>
-  <tr>
-    <td>Jim Jacobs</td>
-    <td>Vice President</td>
-    <td>$10,000</td>
-  </tr>
-  <tr>
-  <td>Fake Name</td>
-  <td>Director</td>
-  <td>$6,000</td>
-  </tr>
-</table>
-
-<br><b>Comparing Population and Leadership</b>
-<table style="width:100%">
-<tr>
-<th>Population</th>
-<th>Leadership</th>
-
-</tr>
-<tr>
-<td><div id="apexchart"></td>
-<td><div id="TEST"></td>
-</tr>
-</table>
-<br>To learn more about LA County water system leadership read 
-<br><a href="https://innovation.luskin.ucla.edu/wp-content/uploads/2021/06/Urban-Drinking-Water-Governing-Bodies.pdf" target="_blank">Urban Drinking Water Governing Bodies:
-Representation and Accountability of Systems to Los Angeles Countyâ€™s Residents</a>
+            <br><b>Comparing Population and Leadership</b>
+            <table style="width:100%">
+            <tr>
+            <th>Population</th>
+            <th>Leadership</th>
+            </tr>
+            <tr>
+            <td><div id="apexchart"></td>
+            <td><div id="Leader"></td>
+            </tr>
+            </table>
+            <br>To learn more about representation in
+            LA County water system leadership read the Luskin Center for Innovation's report on <a href="https://innovation.luskin.ucla.edu/wp-content/uploads/2021/06/Urban-Drinking-Water-Governing-Bodies.pdf" target="_blank"><div class="links">Urban Drinking Water Governing Bodies</a></div>
     
-</div></p>
+            </div></p>
             
             ` 
             }    
-        else if(fieldtomap == 'MechanismCode'){
-            this._div.innerHTML = `
-            <p style="color:black;font-size:14px;line-height:1.5em;overflow:auto;">
-            <b>${properties['Name']}</b>
-            <br><a href="https://innovation.luskin.ucla.edu/" target="_blank">Water System Website</a>
+        else if(fieldtomap == 'New_MechCo'){
+            this._div.innerHTML =`
+            <p style="color:black;font-size:14px;line-height:1em;">
+            <b>${properties['name']}</b>
+            <br><a href="${properties['URL']}"target="_blank"><div class="links">Water System Website</a></div>
             <br>Water Systems are required to publish Consumer Confidence Reports that report water sources and water quality results for regulated contaminants. 
-            <br><a href="https://innovation.luskin.ucla.edu/" target="_blank">Consumer Confidence Report</a>
-            <br><b>Service Connections</b> ${properties['Service Connections']}
-            <br><b>System Population:</b> ${properties['TableData_Population']}
-            <br><b>Median Household Income:</b>
+            <br><a href="https://innovation.luskin.ucla.edu/target="_blank"><div class="links">Consumer Confidence Report</a></div>
+            <br><b>Service Connections</b> ${properties['Connections']}
+            <br><b>System Population:</b> ${properties['TableData_']}
+            <br><b>Median Household Income:</b> $${properties['Median']}
             <br>
             <br><b>Governance Information</b>
             <br>To learn more about governance types read the 
-            <br><a href="https://innovation.luskin.ucla.edu/" target="_blank">LA County Water System Performance Guide</a>
-            <br><b>Governance Type:</b> ${properties['GovernanceType']}
-            <br><b>How Leadership is Chosen:</b> ${properties['Mechanism']}
-            <br><b>Next Election Year:</b> ${properties['UpcomingElectionYear']}
+            <br><a href="https://innovation.luskin.ucla.edu/" target="_blank"><div class="links">LA County Water System Performance Guide</a></div>
+            <br><b>Governance Type:</b> ${properties['GovType']}
+            <br><b>Governing Body:</b> ${properties['GoverningB']}
+            <br><b>How Leadership is Chosen:</b> ${properties['New_Mechan']}
+            <br><b> Average Compensation for Leadership:</b> $${properties['AvgComp']}
+            <br><b>Next Election Year:</b> ${properties['Upcoming Election Year']}
             <br>
-            <br><b>Water System Leadership</b>
-            <br>The table below displays the top three leadership roles if this information available. For full water system leadership data visit the data page. 
-            <table style="width:100%","text-align:left">
-  <tr>
-    <th>Name</th>
-    <th>Role</th>
-    <th>Compensation</th>
-  </tr>
-  <tr>
-    <td>John Clairday</td>
-    <td>President</td>
-    <td>$23,000</td>
-  </tr>
-  <tr>
-    <td>Jim Jacobs</td>
-    <td>Vice President</td>
-    <td>$10,000</td>
-  </tr>
-  <tr>
-  <td>Fake Name</td>
-  <td>Director</td>
-  <td>$6,000</td>
-  </tr>
-</table>
-
-<br><b>Comparing Population and Leadership</b>
-<table style="width:100%">
-<tr>
-<th>Population</th>
-<th>Leadership</th>
-
-</tr>
-<tr>
-<td><div id="apexchart"></td>
-<td><div id="TEST"></td>
-</tr>
-</table>
-<br>To learn more about LA County water system leadership read 
-<br><a href="https://innovation.luskin.ucla.edu/wp-content/uploads/2021/06/Urban-Drinking-Water-Governing-Bodies.pdf" target="_blank">Urban Drinking Water Governing Bodies:
-Representation and Accountability of Systems to Los Angeles Countyâ€™s Residents</a>
+            <br><b>Comparing Population and Leadership</b>
+            <table style="width:100%">
+            <tr>
+            <th>Population</th>
+            <th>Leadership</th>
+            </tr>
+            <tr>
+            <td><div id="apexchart"></td>
+            <td><div id="Leader"></td>
+            </tr>
+            </table>
+            <br>To learn more about representation in
+            LA County water system leadership read the Luskin Center for Innovation's report on <a href="https://innovation.luskin.ucla.edu/wp-content/uploads/2021/06/Urban-Drinking-Water-Governing-Bodies.pdf" target="_blank"><div class="links">Urban Drinking Water Governing Bodies</a></div>
     
-</div></p>
+            </div></p>
             `}    
             else if(fieldtomap == 'Population'){
-                this._div.innerHTML = `
-                <p style="color:black;font-size:14px;line-height:1.5em;overflow:auto;">
-                <b>${properties['Name']}</b>
-                <br><a href="https://innovation.luskin.ucla.edu/" target="_blank">Water System Website</a>
+                this._div.innerHTML =`
+                <p style="color:black;font-size:14px;line-height:1em;">
+                <b>${properties['name']}</b>
+                <br><a href="${properties['URL']}"target="_blank"><div class="links">Water System Website</a></div>
                 <br>Water Systems are required to publish Consumer Confidence Reports that report water sources and water quality results for regulated contaminants. 
-                <br><a href="https://innovation.luskin.ucla.edu/" target="_blank">Consumer Confidence Report</a>
-                <br><b>Service Connections</b> ${properties['Service Connections']}
-                <br><b>System Population:</b> ${properties['TableData_Population']}
-                <br><b>Median Household Income:</b>
+                <br><a href="https://innovation.luskin.ucla.edu/target="_blank"><div class="links">Consumer Confidence Report</a></div>
+                <br><b>Service Connections</b> ${properties['Connections']}
+                <br><b>System Population:</b> ${properties['TableData_']}
+                <br><b>Median Household Income:</b> $${properties['Median']}
                 <br>
                 <br><b>Governance Information</b>
                 <br>To learn more about governance types read the 
-                <br><a href="https://innovation.luskin.ucla.edu/" target="_blank">LA County Water System Performance Guide</a>
-                <br><b>Governance Type:</b> ${properties['GovernanceType']}
-                <br><b>How Leadership is Chosen:</b> ${properties['Mechanism']}
-                <br><b>Next Election Year:</b> ${properties['UpcomingElectionYear']}
+                <br><a href="https://innovation.luskin.ucla.edu/" target="_blank"><div class="links">LA County Water System Performance Guide</a></div>
+                <br><b>Governance Type:</b> ${properties['GovType']}
+                <br><b>Governing Body:</b> ${properties['GoverningB']}
+                <br><b>How Leadership is Chosen:</b> ${properties['New_Mechan']}
+                <br><b> Average Compensation for Leadership:</b> $${properties['AvgComp']}
+                <br><b>Next Election Year:</b> ${properties['Upcoming Election Year']}
                 <br>
-                <br><b>Water System Leadership</b>
-                <br>The table below displays the top three leadership roles if this information available. For full water system leadership data visit the data page. 
-                <table style="width:100%","text-align:left">
-      <tr>
-        <th>Name</th>
-        <th>Role</th>
-        <th>Compensation</th>
-      </tr>
-      <tr>
-        <td>John Clairday</td>
-        <td>President</td>
-        <td>$23,000</td>
-      </tr>
-      <tr>
-        <td>Jim Jacobs</td>
-        <td>Vice President</td>
-        <td>$10,000</td>
-      </tr>
-      <tr>
-      <td>Fake Name</td>
-      <td>Director</td>
-      <td>$6,000</td>
-      </tr>
-    </table>
-    
-    <br><b>Comparing Population and Leadership</b>
-    <table style="width:100%">
-    <tr>
-    <th>Population</th>
-    <th>Leadership</th>
-    
-    </tr>
-    <tr>
-    <td><div id="apexchart"></td>
-    <td><div id="TEST"></td>
-    </tr>
-    </table>
-    <br>To learn more about LA County water system leadership read 
-    <br><a href="https://innovation.luskin.ucla.edu/wp-content/uploads/2021/06/Urban-Drinking-Water-Governing-Bodies.pdf" target="_blank">Urban Drinking Water Governing Bodies:
-    Representation and Accountability of Systems to Los Angeles Countyâ€™s Residents</a>
+                <br><b>Comparing Population and Leadership</b>
+                <table style="width:100%">
+                <tr>
+                <th>Population</th>
+                <th>Leadership</th>
+                </tr>
+                <tr>
+                <td><div id="apexchart"></td>
+                <td><div id="Leader"></td>
+                </tr>
+                </table>
+                <br>To learn more about representation in
+                LA County water system leadership read the Luskin Center for Innovation's report on <a href="https://innovation.luskin.ucla.edu/wp-content/uploads/2021/06/Urban-Drinking-Water-Governing-Bodies.pdf" target="_blank"><div class="links">Urban Drinking Water Governing Bodies</a></div>
         
-    </div></p>
+                </div></p>
                 ` }    
 
        else if(fieldtomap == 'Service_Co'){
-                this._div.innerHTML = `
-                <p style="color:black;font-size:14px;line-height:1.5em;overflow:auto;">
-                <b>${properties['Name']}</b>
-                <br><a href="https://innovation.luskin.ucla.edu/" target="_blank">Water System Website</a>
-                <br>Water Systems are required to publish Consumer Confidence Reports that report water sources and water quality results for regulated contaminants. 
-                <br><a href="https://innovation.luskin.ucla.edu/" target="_blank">Consumer Confidence Report</a>
-                <br><b>Service Connections</b> ${properties['Service Connections']}
-                <br><b>System Population:</b> ${properties['TableData_Population']}
-                <br><b>Median Household Income:</b>
-                <br>
-                <br><b>Governance Information</b>
-                <br>To learn more about governance types read the 
-                <br><a href="https://innovation.luskin.ucla.edu/" target="_blank">LA County Water System Performance Guide</a>
-                <br><b>Governance Type:</b> ${properties['GovernanceType']}
-                <br><b>How Leadership is Chosen:</b> ${properties['Mechanism']}
-                <br><b>Next Election Year:</b> ${properties['UpcomingElectionYear']}
-                <br>
-                <br><b>Water System Leadership</b>
-                <br>The table below displays the top three leadership roles if this information available. For full water system leadership data visit the data page. 
-                <table style="width:100%","text-align:left">
-      <tr>
-        <th>Name</th>
-        <th>Role</th>
-        <th>Compensation</th>
-      </tr>
-      <tr>
-        <td>John Clairday</td>
-        <td>President</td>
-        <td>$23,000</td>
-      </tr>
-      <tr>
-        <td>Jim Jacobs</td>
-        <td>Vice President</td>
-        <td>$10,000</td>
-      </tr>
-      <tr>
-      <td>Fake Name</td>
-      <td>Director</td>
-      <td>$6,000</td>
-      </tr>
-    </table>
-    
-    <br><b>Comparing Population and Leadership</b>
-    <table style="width:100%">
-    <tr>
-    <th>Population</th>
-    <th>Leadership</th>
-    
-    </tr>
-    <tr>
-    <td><div id="apexchart"></td>
-    <td><div id="TEST"></td>
-    </tr>
-    </table>
-    <br>To learn more about LA County water system leadership read 
-    <br><a href="https://innovation.luskin.ucla.edu/wp-content/uploads/2021/06/Urban-Drinking-Water-Governing-Bodies.pdf" target="_blank">Urban Drinking Water Governing Bodies:
-    Representation and Accountability of Systems to Los Angeles Countyâ€™s Residents</a>
-        
-    </div></p>
+        this._div.innerHTML =`
+        <p style="color:black;font-size:14px;line-height:1em;">
+        <b>${properties['name']}</b>
+        <br><a href="${properties['URL']}"target="_blank"><div class="links">Water System Website</a></div>
+        <br>Water Systems are required to publish Consumer Confidence Reports that report water sources and water quality results for regulated contaminants. 
+        <br><a href="https://innovation.luskin.ucla.edu/target="_blank"><div class="links">Consumer Confidence Report</a></div>
+        <br><b>Service Connections</b> ${properties['Connections']}
+        <br><b>System Population:</b> ${properties['TableData_']}
+        <br><b>Median Household Income:</b> $${properties['Median']}
+        <br>
+        <br><b>Governance Information</b>
+        <br>To learn more about governance types read the 
+        <br><a href="https://innovation.luskin.ucla.edu/" target="_blank"><div class="links">LA County Water System Performance Guide</a></div>
+        <br><b>Governance Type:</b> ${properties['GovType']}
+        <br><b>Governing Body:</b> ${properties['GoverningB']}
+        <br><b>How Leadership is Chosen:</b> ${properties['New_Mechan']}
+        <br><b> Average Compensation for Leadership:</b> $${properties['AvgComp']}
+        <br><b>Next Election Year:</b> ${properties['Upcoming Election Year']}
+        <br>
+        <br><b>Comparing Population and Leadership</b>
+        <table style="width:100%">
+        <tr>
+        <th>Population</th>
+        <th>Leadership</th>
+        </tr>
+        <tr>
+        <td><div id="apexchart"></td>
+        <td><div id="Leader"></td>
+        </tr>
+        </table>
+        <br>To learn more about representation in
+        LA County water system leadership read the Luskin Center for Innovation's report on <a href="https://innovation.luskin.ucla.edu/wp-content/uploads/2021/06/Urban-Drinking-Water-Governing-Bodies.pdf" target="_blank"><div class="links">Urban Drinking Water Governing Bodies</a></div>
+
+        </div></p>
                 
                 ` }    
         else if(fieldtomap == 'WaterBill'){
-                this._div.innerHTML = 
-                ` <p style="color:black;font-size:14px;line-height:1.5em;overflow:auto;">
-                <b>${properties['Name']}</b>
-                <br><a href="https://innovation.luskin.ucla.edu/" target="_blank">Water System Website</a>
-                <br>Water Systems are required to publish Consumer Confidence Reports that report water sources and water quality results for regulated contaminants. 
-                <br><a href="https://innovation.luskin.ucla.edu/" target="_blank">Consumer Confidence Report</a>
-                <br><b>Service Connections</b> ${properties['Service Connections']}
-                <br><b>System Population:</b> ${properties['TableData_Population']}
-                <br><b>Median Household Income:</b>
-                <br>
+            this._div.innerHTML =`
+            <p style="color:black;font-size:14px;line-height:1em;">
+            <b>${properties['name']}</b>
+            <br><a href="${properties['URL']}"target="_blank"><div class="links">Water System Website</a></div>
+            <br>Water Systems are required to publish Consumer Confidence Reports that report water sources and water quality results for regulated contaminants. 
+            <br><a href="https://innovation.luskin.ucla.edu/target="_blank"><div class="links">Consumer Confidence Report</a></div>
+            <br><b>Service Connections</b> ${properties['Connections']}
+            <br><b>System Population:</b> ${properties['TableData_']}
+            <br><b>Median Household Income:</b> $${properties['Median']}
+            <br>
                 <br><b>Water Bill Information</b>
                 <br>
                 <br><b>Average Water Bill:</b> $${properties['WaterBill']}
-                <br>My water bill is <b>${properties['RiskCode_Percent']}% ${properties['OU']}</b> the average bill in
+                <br>
+                <br>My water bill is <b>${properties['Perc']}% ${properties['OU']}</b> the average bill in
                 <br> Los Angeles County.
+                <br>
                 <br>It takes <b>${properties['HMW']} hours of minimum wage</b>
                 <br> to pay my water bill.
                 </p> 
-                <p style="color:black;font-size:10px;">Average water bill is calculated assuming average household consumption of 6 CCF which reflects water conservation goals and meets California's Human Right to Water goal. Most water systems measure residential water use in CCF (centum cubic feet) or HCF (hundred cubic feet). A single CCF or HCF is 748 gallons.</p> `}     
+ `}     
         else if(fieldtomap == 'HMW'){
-                 this._div.innerHTML =
-                 `<p style="color:black;font-size:14px;line-height:1.5em;overflow:auto;">
-                 <b>${properties['Name']}</b>
-                 <br><a href="https://innovation.luskin.ucla.edu/" target="_blank">Water System Website</a>
-                 <br>Water Systems are required to publish Consumer Confidence Reports that report water sources and water quality results for regulated contaminants. 
-                 <br><a href="https://innovation.luskin.ucla.edu/" target="_blank">Consumer Confidence Report</a>
-                 <br><b>Service Connections</b> ${properties['Service Connections']}
-                 <br><b>System Population:</b> ${properties['TableData_Population']}
-                 <br><b>Median Household Income:</b>
-                 <br>
-                 <br><b>Water Bill Information</b>
-                 <br>
-                 <br><b>Average Water Bill:</b> $${properties['WaterBill']}
-                 <br>My water bill is <b>${properties['RiskCode_Percent']}% ${properties['OU']}</b> the average bill in
-                 <br> Los Angeles County.
-                 <br>It takes <b>${properties['HMW']} hours of minimum wage</b>
-                 <br> to pay my water bill.
-                 </p> 
-                 <p style="color:black;font-size:10px;">Average water bill is calculated assuming average household consumption of 6 CCF which reflects water conservation goals and meets California's Human Right to Water goal. Most water systems measure residential water use in CCF (centum cubic feet) or HCF (hundred cubic feet). A single CCF or HCF is 748 gallons.</p> `}  
-        else if(fieldtomap == 'RiskCode_RiskCode'){
-                this._div.innerHTML =
-                `<p style="color:black;font-size:14px;line-height:1.5em;">
-                <b>${properties['Name']}</b>
-                <br><a href="https://innovation.luskin.ucla.edu/" target="_blank">Water System Website</a>
-                <br>Water Systems are required to publish Consumer Confidence Reports that report water sources and water quality results for regulated contaminants. 
-                <br><a href="https://innovation.luskin.ucla.edu/" target="_blank">Consumer Confidence Report</a>
-                <br><b>Service Connections</b> ${properties['Service Connections']}
-                <br><b>System Population:</b> ${properties['TableData_Population']}
-                <br><b>Median Household Income:</b>
+            this._div.innerHTML =`
+            <p style="color:black;font-size:14px;line-height:1em;">
+            <b>${properties['name']}</b>
+            <br><a href="${properties['URL']}"target="_blank"><div class="links">Water System Website</a></div>
+            <br>Water Systems are required to publish Consumer Confidence Reports that report water sources and water quality results for regulated contaminants. 
+            <br><a href="https://innovation.luskin.ucla.edu/target="_blank"><div class="links">Consumer Confidence Report</a></div>
+            <br><b>Service Connections</b> ${properties['Connections']}
+            <br><b>System Population:</b> ${properties['TableData_']}
+            <br><b>Median Household Income:</b> $${properties['Median']}
+            <br>
+                <br><b>Water Bill Information</b>
                 <br>
+                <br><b>Average Water Bill:</b> $${properties['WaterBill']}
+                <br>
+                <br>My water bill is <b>${properties['Perc']}% ${properties['OU']}</b> the average bill in
+                <br> Los Angeles County.
+                <br>
+                <br>It takes <b>${properties['HMW']} hours of minimum wage</b>
+                <br> to pay my water bill.
+                </p> 
+                 `}  
+        else if(fieldtomap == 'RiskCode'){
+            this._div.innerHTML =`
+            <p style="color:black;font-size:14px;line-height:1em;">
+            <b>${properties['name']}</b>
+            <br><a href="${properties['URL']}"target="_blank"><div class="links">Water System Website</a></div>
+            <br>Water Systems are required to publish Consumer Confidence Reports that report water sources and water quality results for regulated contaminants. 
+            <br><a href="https://innovation.luskin.ucla.edu/target="_blank"><div class="links">Consumer Confidence Report</a></div>
+            <br><b>Service Connections</b> ${properties['Connections']}
+            <br><b>System Population:</b> ${properties['TableData_']}
+            <br><b>Median Household Income:</b> $${properties['Median']}
+            <br>
                 <br><b>Water System Performance</b>
                 <br>
-                <br><b>Risk Score:</b> ${properties['RiskCode_SpanRiskScore']}
-                <br><a href="https://innovation.luskin.ucla.edu/wp-content/uploads/2021/07/LA-County-Small-Water-System-Risk-Assessment.pdf" target="_blank">Read the LA County Risk Assessment Here</a>
-                <br><b>Required System Operator Level:</b> ${properties['NewSpanMerge_ReqOp']}
-                <br><b>Current System Operator Level:</b> ${properties['NewSpanMerge_HighestOp']}
-                <br>Does this system's operator meet the required certifications?
-                <br>This system had <b> ${properties['NewSpanMerge_FiveMCL']} health violations </b> from 2014-2018.
-                <br><b>Primary water source:</b>
-                    
+                <br><b>Primary water source:</b> ${properties['Source_Source']}
+                <br>
+                <br><b>Required System Operator Level:</b> ${properties['ReqOp']}
+                <br><b>Current System Operator Level:</b> ${properties['HighestOp']}
+                <br>This system had <b> ${properties['FiveMCL']} health violations </b> from 2014-2018.
+                <br>
+                <br><b>Risk Score:</b> ${properties['RiskScore']}
+                <br><a href="https://innovation.luskin.ucla.edu/wp-content/uploads/2021/07/LA-County-Small-Water-System-Risk-Assessment.pdf" target="_blank"><div class="links">Read the LA County Risk Assessment Here</a></div>  
                 </p>`}  
-        else if(fieldtomap == 'RiskCode_FiveMCL'){
-                this._div.innerHTML =
-                                    `<p style="color:black;font-size:14px;line-height:1.5em;"><b>System Performance</b>
-                                    <br><b>${properties['Name']}</b>
-                                    <br><a href="https://innovation.luskin.ucla.edu/" target="_blank">Full Water System Data</a>
-                                    <br><b>Risk Assessment</b>
-                                    <br>The LA County Risk Assessment anaylzed water systems with 3300 or fewer service connections to detect their risk of failure.
-                                    <br><b>Risk Score:</b> ${properties['RiskCode_SpanRiskScore']}
-                                    <br><a href="https://innovation.luskin.ucla.edu/wp-content/uploads/2021/07/LA-County-Small-Water-System-Risk-Assessment.pdf" target="_blank">Read the LA County Risk Assessment Here</a>
-                                    <br><b>Water System Operators</b>
-                                    <br>Water System Operators are trained and certified to monitor system and treatment operations.  
-                                    <br><b>Required System Operator Level:</b> ${properties['NewSpanMerge_ReqOp']}
-                                    <br><b>Current System Operator Level:</b> ${properties['NewSpanMerge_HighestOp']}
-                                    <br>This system had <b> ${properties['NewSpanMerge_FiveMCL']} health violations </b> from 2014-2018.
-                                        
-                                    </p>`}   
-        else if(fieldtomap == 'Operator Below Required'){
-                this._div.innerHTML =
-                `<p style="color:black;font-size:14px;line-height:1.5em;"><b>System Performance</b>
-                <br><b>${properties['Name']}</b>
-                <br><a href="https://innovation.luskin.ucla.edu/" target="_blank">Full Water System Data</a>
-                <br><b>Risk Assessment</b>
-                <br>The LA County Risk Assessment anaylzed water systems with 3300 or fewer service connections to detect their risk of failure.
-                <br><b>Risk Score:</b> ${properties['RiskCode_SpanRiskScore']}
-                <br><a href="https://innovation.luskin.ucla.edu/wp-content/uploads/2021/07/LA-County-Small-Water-System-Risk-Assessment.pdf" target="_blank">Read the LA County Risk Assessment Here</a>
-                <br><b>Water System Operators</b>
-                <br>Water System Operators are trained and certified to monitor system and treatment operations.  
-                <br><b>Required System Operator Level:</b> ${properties['NewSpanMerge_ReqOp']}
-                <br><b>Current System Operator Level:</b> ${properties['NewSpanMerge_HighestOp']}
-                <br>This system had <b> ${properties['NewSpanMerge_FiveMCL']} health violations </b> from 2014-2018.
-                
+        else if(fieldtomap == 'FiveMCL'){
+            this._div.innerHTML =`
+            <p style="color:black;font-size:14px;line-height:1em;">
+            <b>${properties['name']}</b>
+            <br><a href="${properties['URL']}"target="_blank"><div class="links">Water System Website</a></div>
+            <br>Water Systems are required to publish Consumer Confidence Reports that report water sources and water quality results for regulated contaminants. 
+            <br><a href="https://innovation.luskin.ucla.edu/target="_blank"><div class="links">Consumer Confidence Report</a></div>
+            <br><b>Service Connections</b> ${properties['Connections']}
+            <br><b>System Population:</b> ${properties['TableData_']}
+            <br><b>Median Household Income:</b> $${properties['Median']}
+            <br>
+                <br><b>Water System Performance</b>
+                <br>
+                <br><b>Primary water source:</b> ${properties['Source_Source']}
+                <br>
+                <br><b>Required System Operator Level:</b> ${properties['ReqOp']}
+                <br><b>Current System Operator Level:</b> ${properties['HighestOp']}
+                <br>This system had <b> ${properties['FiveMCL']} health violations </b> from 2014-2018.
+                <br>
+                <br><b>Risk Score:</b> ${properties['RiskScore']}
+                <br><a href="https://innovation.luskin.ucla.edu/wp-content/uploads/2021/07/LA-County-Small-Water-System-Risk-Assessment.pdf" target="_blank"><div class="links">Read the LA County Risk Assessment Here</a></div>  
                 </p>`}   
-        else if(fieldtomap == 'No operator'){
-                this._div.innerHTML =`<p style="color:black;font-size:14px;line-height:1.5em;"><b>System Performance</b>
-                <br><b>${properties['Name']}</b>
-                <br><a href="https://innovation.luskin.ucla.edu/" target="_blank">Full Water System Data</a>
-                <br><b>Risk Assessment</b>
-                <br>The LA County Risk Assessment anaylzed water systems with 3300 or fewer service connections to detect their risk of failure.
-                <br><b>Risk Score:</b> ${properties['RiskCode_SpanRiskScore']}
-                <br><a href="https://innovation.luskin.ucla.edu/wp-content/uploads/2021/07/LA-County-Small-Water-System-Risk-Assessment.pdf" target="_blank">Read the LA County Risk Assessment Here</a>
-                <br><b>Water System Operators</b>
-                <br>Water System Operators are trained and certified to monitor system and treatment operations.  
-                <br><b>Required System Operator Level:</b> ${properties['NewSpanMerge_ReqOp']}
-                <br><b>Current System Operator Level:</b> ${properties['NewSpanMerge_HighestOp']}
-                <br>This system had <b> ${properties['NewSpanMerge_FiveMCL']} health violations </b> from 2014-2018.
-                
+        else if(fieldtomap == 'OperatorBe'){
+            this._div.innerHTML =`
+            <p style="color:black;font-size:14px;line-height:1em;">
+            <b>${properties['name']}</b>
+            <br><a href="${properties['URL']}"target="_blank"><div class="links">Water System Website</a></div>
+            <br>Water Systems are required to publish Consumer Confidence Reports that report water sources and water quality results for regulated contaminants. 
+            <br><a href="https://innovation.luskin.ucla.edu/target="_blank"><div class="links">Consumer Confidence Report</a></div>
+            <br><b>Service Connections</b> ${properties['Connections']}
+            <br><b>System Population:</b> ${properties['TableData_']}
+            <br><b>Median Household Income:</b> $${properties['Median']}
+            <br>
+                <br><b>Water System Performance</b>
+                <br>
+                <br><b>Primary water source:</b> ${properties['Source_Source']}
+                <br>
+                <br><b>Required System Operator Level:</b> ${properties['ReqOp']}
+                <br><b>Current System Operator Level:</b> ${properties['HighestOp']}
+                <br>This system had <b> ${properties['FiveMCL']} health violations </b> from 2014-2018.
+                <br>
+                <br><b>Risk Score:</b> ${properties['RiskScore']}
+                <br><a href="https://innovation.luskin.ucla.edu/wp-content/uploads/2021/07/LA-County-Small-Water-System-Risk-Assessment.pdf" target="_blank"><div class="links">Read the LA County Risk Assessment Here</a></div>  
+                </p>`}   
+        else if(fieldtomap == 'PWS_Code'){
+            this._div.innerHTML =`
+            <p style="color:black;font-size:14px;line-height:1em;">
+            <b>${properties['name']}</b>
+            <br><a href="${properties['URL']}"target="_blank"><div class="links">Water System Website</a></div>
+            <br>Water Systems are required to publish Consumer Confidence Reports that report water sources and water quality results for regulated contaminants. 
+            <br><a href="https://innovation.luskin.ucla.edu/target="_blank"><div class="links">Consumer Confidence Report</a></div>
+            <br><b>Service Connections</b> ${properties['Connections']}
+            <br><b>System Population:</b> ${properties['TableData_']}
+            <br><b>Median Household Income:</b> $${properties['Median']}
+            <br>
+                <br><b>Water System Performance</b>
+                <br>
+                <br><b>Primary water source:</b> ${properties['Source_Source']}
+                <br>
+                <br><b>Required System Operator Level:</b> ${properties['ReqOp']}
+                <br><b>Current System Operator Level:</b> ${properties['HighestOp']}
+                <br>This system had <b> ${properties['FiveMCL']} health violations </b> from 2014-2018.
+                <br>
+                <br><b>Risk Score:</b> ${properties['RiskScore']}
+                <br><a href="https://innovation.luskin.ucla.edu/wp-content/uploads/2021/07/LA-County-Small-Water-System-Risk-Assessment.pdf" target="_blank"><div class="links">Read the LA County Risk Assessment Here</a></div>  
                 </p>`}  
 //Spanish Info Box Code Here 
                                             if(fieldtomap == 'SpanGovernanceCode'){
@@ -1317,8 +1255,8 @@ Representation and Accountability of Systems to Los Angeles Countyâ€™s Resi
         // if feature is not highlighted
         else
         {
-            this._div.innerHTML = 'Click on a Water System<br>'+
-                                    'Spanish Translate';
+            this._div.innerHTML = 'Click on a Water System<br>'
+                                   
         }
     };
 
@@ -1582,14 +1520,11 @@ function createNewDashboard(properties){
 let title = 'Leadership Demographics ' + properties['Name'];
 // data values
 let data = [
-        properties['Hispanic'],
-        properties['White'],
-        properties['Black'],
-        properties['Asian'],
-        properties['AIAN'],
-        properties['NHOPI'],
-        properties['Other'],
-        properties['TwoOrMore'],
+        properties['L_Hispanic'],
+        properties['L_White'],
+        properties['L_Black'],
+        properties['L_Asian'],
+        properties['L_TwoOrMor'],
 ]
 // data fields
 let fields = [
@@ -1597,9 +1532,6 @@ let fields = [
     'White',
     'Black',
     'Asian',
-    'American Indian and Alaskan Native',
-    'Native Hawaiian and other Pacific Islander',
-    'Other Race',
     'Two or more Race',
 ]
 console.log(data)
@@ -1637,7 +1569,7 @@ var options2= {
         }, 
     },
     title: {},
-    colors: ['#003452', '#005687', '#4E8FB4', '#9CC8E0', '#DD7F03','#FCA636','#FDBB63','#FFE985'],
+    colors: ['#003452', '#005687', '#4E8FB4', '#9CC8E0','#FFE985'],
     series: data,
     stroke: {
      width: 0,
@@ -1668,7 +1600,7 @@ var options2= {
    },
 };
 
-var chart = new ApexCharts(document.querySelector("#TEST"), options2)
+var chart = new ApexCharts(document.querySelector("#Leader"), options2)
 chart.render()
 }
   
@@ -1679,62 +1611,65 @@ function zoomTo(geoid){
 	map.fitBounds(zoom2poly[0].getBounds())
 }
 
-function createTable(){
+// function createTable(){
 
 
-	// empty array for our data
-	let datafortable = [];
+// 	// empty array for our data
+//     let datafortable = [];
 
-	// loop through the data and add the properties object to the array
-	geojson_data.features.forEach(function(item){
-		datafortable.push(item.properties)
-	})
+//     // loop through the data and add the properties object to the array
+//     geojson_data.features.forEach(function(item){
+//         datafortable.push(item.properties)
+//     })
 
-	// array to define the fields: each object is a column
-	let fields = [
-		{ name: "Name", type: "text", width: "200px"},
-		{ name: 'pwsid', type: 'number', width: "200px"},
-		{ name: 'Population', type: 'text', width: "200px"},
-        { name: 'Service Connections', type: 'text', width: "200px"},
-		{ name: 'RiskCode', type: 'number', width: "200px"},
-        { name: 'Water Source', type: 'number', width: "200px"},
-        { name: 'Average Bill', type: 'number', width: "200px"},
-        { name: 'RiskCode_RiskCode', type: 'number', width: "200px"},
-        { name: 'RiskCode_RiskCode', type: 'number', width: "200px"},
-        { name: 'RiskCode_RiskCode', type: 'number', width: "200px"},
-        { name: 'RiskCode_RiskCode', type: 'number', width: "200px"},
-        { name: 'RiskCode_RiskCode', type: 'number', width: "200px"},
-        { name: 'RiskCode_RiskCode', type: 'number', width: "200px"},
-        { name: 'RiskCode_RiskCode', type: 'number', width: "200px"},
-        { name: 'RiskCode_RiskCode', type: 'number', width: "200px"},
-        { name: 'RiskCode_RiskCode', type: 'number', width: "200px"},
-        { name: 'RiskCode_RiskCode', type: 'number', width: "200px"},
-        { name: 'RiskCode_RiskCode', type: 'number', width: "200px"},
+//     console.log(datafortable)
+// 	// array to define the fields: each object is a column
+// 	let fields = [
+// 		{ name: "Name", type: "text", width: "200px"},
+// 		{ name: 'pwsid', type: 'number', width: "200px"},
+// 		{ name: 'Population', type: 'text', width: "200px"},
+//         { name: 'Service Connections', type: 'text', width: "200px"},
+// 		{ name: 'RiskCode', type: 'number', width: "200px"},
+//         { name: 'Water Source', type: 'number', width: "200px"},
+//         { name: 'Average Bill', type: 'number', width: "200px"},
+//         { name: 'RiskCode_RiskCode', type: 'number', width: "200px"},
+//         { name: 'RiskCode_RiskCode', type: 'number', width: "200px"},
+//         { name: 'RiskCode_RiskCode', type: 'number', width: "200px"},
+//         { name: 'RiskCode_RiskCode', type: 'number', width: "200px"},
+//         { name: 'RiskCode_RiskCode', type: 'number', width: "200px"},
+//         { name: 'RiskCode_RiskCode', type: 'number', width: "200px"},
+//         { name: 'RiskCode_RiskCode', type: 'number', width: "200px"},
+//         { name: 'RiskCode_RiskCode', type: 'number', width: "200px"},
+//         { name: 'RiskCode_RiskCode', type: 'number', width: "200px"},
+//         { name: 'RiskCode_RiskCode', type: 'number', width: "200px"},
+//         { name: 'RiskCode_RiskCode', type: 'number', width: "200px"},
 
         
-	]
- 
-	// create the table in our footer
-	$(".footertable").jsGrid({
-		width: "98%",
-		height: "500px",
+// 	]
+
+// 	// create the table in our footer
+// 	$(".footertable").jsGrid({
+// 		width: "98%",
+// 		height: "500px",
         
-		editing: true,
-		sorting: true,
-		paging: true,
-		autoload: true,
+// 		editing: true,
+// 		sorting: true,
+// 		paging: true,
+// 		autoload: true,
  
-		pageSize: 250,
-		pageButtonCount: 5,
+// 		pageSize: 250,
+// 		pageButtonCount: 5,
+//         // search with current grid filter
+     
  
-		data: datafortable,
-		fields: fields,
-		rowClick: function(args) { 
-            console.log(args)
-            zoomTo(args.item.Name)
-        },
-        });
-        }
+// 		data: datafortable,
+// 		fields: fields,
+// 		rowClick: function(args) { 
+//             console.log(args)
+//             zoomTo(args.item.Name)
+//         },
+//         });
+//         }
 function zoomTo(Name){
 
 let zoom2poly = geojson_layer.getLayers().filter(item => item.feature.properties.Name === Name)
@@ -1752,13 +1687,13 @@ function myServeFunction(){
     mapGeoJSON('Service_Co',5,'Dark2','quantiles');}
 
 function myGovTypeFunction(){
-    mapGeoJSON('GovernanceCode',7,'Paired','jenks');}
+    mapGeoJSON('GovCode',7,'Paired','jenks');}
 
 function myGovTypeFunctionSpanish(){
         mapGeoJSON('SpanGovernanceCode',7,'Paired','jenks');}
 
 function myMechTypeFunction(){
-    mapGeoJSON('MechanismCode',3,'Accent','equal interval');}
+    mapGeoJSON('New_MechCo',3,'Accent','equal interval');}
 
 function myMechTypeFunctionSpanish(){
       mapGeoJSON('SpanMechanismCode',3,'Accent','equal interval');}
@@ -1770,18 +1705,18 @@ function MinWageFunction(){
         mapGeoJSON('HMW',5,'YlOrRd','natural breaks');}
     
 function myOpBelowFunction(){
-    mapGeoJSON('Operator Below Required',4,'Accent','natural breaks');}
+    mapGeoJSON('OperatorBe',4,'Accent','natural breaks');}
 
 function myNoOpFunction(){
-    mapGeoJSON('No operator',5,'Accent','natural breaks');}
+    mapGeoJSON('PWS_Code',7,'Accent','natural breaks');}
 
 function RiskFunction(){
-        mapGeoJSON('RiskCode_RiskCode',5,'Accent','natural breaks');}
+        mapGeoJSON('RiskCode',5,'Accent','natural breaks');}
 
 function SpanRiskFunction(){
-            mapGeoJSON('No operator',5,'Accent','natural breaks');}
+            mapGeoJSON('OperatorBe',5,'Accent','natural breaks');}
 function MCLFunction(){
-                mapGeoJSON('RiskCode_FiveMCL',5,'Accent','natural breaks');}
+                mapGeoJSON('FiveMCL',5,'Accent','natural breaks');}
 function SpanMCLFunction(){
                     mapGeoJSON('NewSpanMerge_FiveMCL',5,'Accent','natural breaks');}
 

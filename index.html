@@ -42,12 +42,13 @@
 
     <div class="header">
         Los Angeles County Water System Governance Map 
-        
-        <a href="https://innovation.luskin.ucla.edu/wp-content/uploads/2021/07/LA-County-Small-Water-System-Risk-Assessment.pdf" target="_blank">About</a> |
-        <a href="https://innovation.luskin.ucla.edu/wp-content/uploads/2021/07/LA-County-Small-Water-System-Risk-Assessment.pdf" target="_blank">Map Data</a> |
-        <a href="https://innovation.luskin.ucla.edu/wp-content/uploads/2021/07/LA-County-Small-Water-System-Risk-Assessment.pdf" target="_blank">Resources</a> |
-        <a href="https://lciwaterprojects.github.io/DRAFT_SpanishLACountyMap/" target="_blank">Spanish Map</a> 
     </div>
+	<div class = "headerbuttons"> 
+        | <a href="https://github.com/LCIWaterProjects/lacwatergovmap/tree/main/data" target="_blank"> Map Data</a> |
+        <a href="https://innovation.luskin.ucla.edu/wp-content/uploads/2021/07/LA-County-Small-Water-System-Risk-Assessment.pdf" target="_blank">Spanish Map</a> |
+		<a href="https://innovation.luskin.ucla.edu/water-lab/" target="_blank">Human Right to Water Solutions Lab</a> |
+		<a href="https://forms.gle/DycWot4JLkfxbfcF9" target="_blank">Provide Feedback</a> |
+	</div>
     <div class="sidebar">
         <div class = 'sidebar-intro'>
             <button onclick="on()">Indigenous Land & Water Acknowledgment</button>
@@ -80,21 +81,23 @@
 
             "><img src="https://www.clipartmax.com/png/middle/95-953735_instagram-icon-no-background-download-information-icon-png.png" width="15px"></b>
 
-            <br><button onclick='MinWageFunction()'>Hours of Minimum Wage</button> <b class="img" title="How much do you have to work to pay your water bill? This map shows the number of hours it take working at Los Angeles County's $15 per hour minimum wage to pay your systems average water bill. 
+            <br><button onclick='MinWageFunction()'>Hours of Minimum Wage</button> <b class="img" title="How much do you have to work to pay your water bill? This map shows the number of hours it takes working at Los Angeles County's $15 per hour minimum wage to pay your systems average water bill. 
             "><img src="https://www.clipartmax.com/png/middle/95-953735_instagram-icon-no-background-download-information-icon-png.png" width="15px"></b>
 
             <br><b>Water System Performance</b>
-            <br><button onclick='RiskFunction()'>Water System Risk Score</button> <b class="img" title="The Water System Risk Score measures the risk of a water system failing to provide clean drinking water that meets regulatory standards. Only systems with 3,300 service connections or less are included in the risk scoring. To learn more about the risk scores visit the Resources page and read the Los Angeles County Risk Assessment.
+
+            <br><button onclick='myNoOpFunction()'>Primary Water Source</button> <b class="img" title="This map shows a water system's primary water source. Water systems may have multiple sources from surface water, ground water, or recycled water. To learn more about where your system's water sources read the systems urban water management plan. 
+            "><img src="https://www.clipartmax.com/png/middle/95-953735_instagram-icon-no-background-download-information-icon-png.png" width="15px"></b>
+
+            <br><button onclick='myOpBelowFunction()'>Operator Certification</button> <b class="img" title="Water system operators are responsible for the maintanance and operation of water system treatment technology and infrastructure. As new technology is needed to ensure drinking water is safe water system operators must be certified at higher levels. If your systems operator is below certification your system may be at higher risk of failure. To see your systems required operator level and current operator level click on your water system and view the info box.
             "><img src="https://www.clipartmax.com/png/middle/95-953735_instagram-icon-no-background-download-information-icon-png.png" width="15px"></b>
 
             <br><button onclick='MCLFunction()'>Water System Violations</button> <b class="img" title="This map shows the number of water system violations a system had from 2014-2018. To learn more about your water system's performance or violations click on the water system on the map and go to the Consumer Confidence Report linked in the info box.
             "><img src="https://www.clipartmax.com/png/middle/95-953735_instagram-icon-no-background-download-information-icon-png.png" width="15px"></b>
 
-            <br><button onclick='myOpBelowFunction()'>Operator Below Certification</button> <b class="img" title="Water system operators are responsible for the maintanance and operation of water system treatment technology and infrastructure. As new technology is needed to ensure drinking water is safe water system operators must be certified at higher levels. If your systems operator is below certification your system may be at higher risk of failure. To see your systems required operator level and current operator level click on your water system and view the info box.
+            <br><button onclick='RiskFunction()'>Water System Risk Score</button> <b class="img" title="The Water System Risk Score measures the risk of a water system failing to provide clean drinking water that meets regulatory standards. Only systems with 3,300 service connections or less are included in the risk scoring. To learn more about the risk scores visit the Resources page and read the Los Angeles County Risk Assessment.
             "><img src="https://www.clipartmax.com/png/middle/95-953735_instagram-icon-no-background-download-information-icon-png.png" width="15px"></b>
-
-            <br><button onclick='myNoOpFunction()'>Primary Water Source</button> <b class="img" title="This map shows a water system's primary water source. Water systems may have multiple sources from imported water, ground water, or recycled water. To learn more about where your system's water sources read the systems urban water management plan. 
-            "><img src="https://www.clipartmax.com/png/middle/95-953735_instagram-icon-no-background-download-information-icon-png.png" width="15px"></b>
+           
             
             </div>
             </div>
@@ -108,7 +111,7 @@
                 <br>
                 <br>The Luskin Center for Innovation at UCLA acknowledges our presence on the traditional, ancestral, and unceded territory of the Gabrielino/Tongva peoples.
                 <br>
-                <br>We recognize that there is no justice without the return of sacred land and water to native peoples. We also acknowledge the critical role water protectors and Indigenous organizers  have in shaping the future of water in California. We invite you to visit our Resources page to learn more about Indigenous environmental justice work and connect with these groups directly. 
+                <br>We recognize that there is no justice without the return of sacred land and water to native peoples. We also acknowledge the critical role water protectors and Indigenous organizers  have in shaping the future of water in California. We invite you to connect with those groups directly to learn more about Indigenous environmental justice work. 
                 <br>
                 <br>Our hope is that this tool is useful for all communities to better understand and navigate their local water systems and water system governance in order to advocate for just and equitable access to clean and affordable drinking water.
                 <br>
@@ -134,7 +137,7 @@
                 <br>
                 <br><b>Click:</b> Click on a water system on the map to generate an info panel that displays more information about the water system. 
                 <br>
-                <br><b>Data:</b> Use the data table below the map to explore water system data. Clicking on a row in the data table takes you to that water system on the map.
+                <br><b>Data:</b> Click on the "Map Data" button at the top of the page to view a searchable data table for the mapping tool. 
                 <br>
                 <br> <h3>Click anywhere to view the map.</h3>
                 </div>
@@ -156,12 +159,9 @@
 
     </div>
     <div class="footer">
-        <h3>Water System Data Table</h3>
-        The table below contains the full data set 
-        Use the column headers to filter the table by variables. 
-        Click on a row to zoom in on a water system on the map.
-		<div id="jsGrid"></div>
-        <div class ="footertable"></div>
+       
+	
+        <!-- <div class ="footertable"></div> -->
         <img src="https://innovation.luskin.ucla.edu/wp-content/uploads/2019/04/White-Luskin-Logo-201804-300x26.png" width="300px">
     </div>
 
