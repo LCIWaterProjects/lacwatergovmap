@@ -5,7 +5,7 @@ let lat = 34;
 let lon = -118;
 let zl = 9;
 
-let geojsonPath = 'https://raw.githubusercontent.com/LCIWaterProjects/lacwatergovmap/main/data/WaterDataUpdate.geojson';
+let geojsonPath = 'https://raw.githubusercontent.com/LCIWaterProjects/lacwatergovmap/main/data/Los%20Angeles%20County%20Water.geojson';
 let geojson_data;
 let geojson_layer;
 
@@ -1020,7 +1020,7 @@ function createInfoPanel(){
                 <br>
                 <br><b>Average Water Bill:</b> ${properties['Bill_Panel']}
                 <br>
-                <br>My water bill is <b>${properties['Perc']}% ${properties['OU']}</b> the average bill in
+                <br>My water bill is <b>${properties['OverUnder']}% ${properties['OU']}</b> the average bill in
                 <br> Los Angeles County.
                 <br>
                 <br>It takes <b>${properties['HMW']} hours of minimum wage</b>
@@ -1042,7 +1042,7 @@ function createInfoPanel(){
                 <br>
                 <br><b>Average Water Bill:</b> ${properties['Bill_Panel']}
                 <br>
-                <br>My water bill is <b>${properties['Perc']}% ${properties['OU']}</b> the average bill in
+                <br>My water bill is <b>${properties['OverUnder']}% ${properties['OU']}</b> the average bill in
                 <br> Los Angeles County.
                 <br>
                 <br>It takes <b>${properties['HMW']} hours of minimum wage</b>
