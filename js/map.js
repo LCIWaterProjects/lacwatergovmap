@@ -5,11 +5,10 @@ let lat = 34;
 let lon = -118;
 let zl = 9;
 
-let geojsonPath = 'https://raw.githubusercontent.com/LCIWaterProjects/lacwatergovmap/main/data/LAC_Water_Data.geojson';
+let geojsonPath = 'https://raw.githubusercontent.com/LCIWaterProjects/lacwatergovmap/main/data/WaterDataUpdate.geojson';
 let geojson_data;
 let geojson_layer;
-let govjsonpath ='https://raw.githubusercontent.com/LCIWaterProjects/lacwatergovmap/main/data/GovTable%20(1).json';
-let tabledata;
+
 
 let brew = new classyBrew();
 let legend = L.control({position: 'bottomleft'});
@@ -864,10 +863,10 @@ function createInfoPanel(){
             <b>${properties['name']}</b>
             <br><a href="${properties['URL']}"target="_blank"><div class="links">Water System Website</a></div>
             <br>Water Systems are required to publish Consumer Confidence Reports that report water sources and water quality results for regulated contaminants. 
-            <br><a href="https://innovation.luskin.ucla.edu/target="_blank"><div class="links">Consumer Confidence Report</a></div>
-            <br><b>Service Connections</b> ${properties['Connections']}
+            <br><a href="${properties['CCR']}"target"_blank"><div class="links">Consumer Confidence Report</a></div>
+            <br><b>Service Connections</b> ${properties['connections_Connections']}
             <br><b>System Population:</b> ${properties['TableData_']}
-            <br><b>Median Household Income:</b> $${properties['Median']}
+            <br><b>Median Household Income:</b> ${properties['Median']}
             <br>
             <br><b>Governance Information</b>
             <br>To learn more about governance types read the 
@@ -875,8 +874,8 @@ function createInfoPanel(){
             <br><b>Governance Type:</b> ${properties['GovType']}
             <br><b>Governing Body:</b> ${properties['GoverningB']}
             <br><b>How Leadership is Chosen:</b> ${properties['New_Mechan']}
-            <br><b> Average Compensation for Leadership:</b> $${properties['AvgComp']}
-            <br><b>Next Election Year:</b> ${properties['Upcoming Election Year']}
+            <br><b> Average Compensation for Leadership:</b> ${properties['AvgComp']}
+            <br><b>Next Election Year:</b> ${properties['UpcomingEl']}
             <br>
             <br><b>Comparing Population and Leadership</b>
             <table style="width:100%">
@@ -902,10 +901,10 @@ function createInfoPanel(){
             <b>${properties['name']}</b>
             <br><a href="${properties['URL']}"target="_blank"><div class="links">Water System Website</a></div>
             <br>Water Systems are required to publish Consumer Confidence Reports that report water sources and water quality results for regulated contaminants. 
-            <br><a href="https://innovation.luskin.ucla.edu/target="_blank"><div class="links">Consumer Confidence Report</a></div>
-            <br><b>Service Connections</b> ${properties['Connections']}
+            <br><a href="${properties['CCR']}"target"_blank"><div class="links">Consumer Confidence Report</a></div>
+            <br><b>Service Connections</b> ${properties['connections_Connections']}
             <br><b>System Population:</b> ${properties['TableData_']}
-            <br><b>Median Household Income:</b> $${properties['Median']}
+            <br><b>Median Household Income:</b> ${properties['Median']}
             <br>
             <br><b>Governance Information</b>
             <br>To learn more about governance types read the 
@@ -913,8 +912,8 @@ function createInfoPanel(){
             <br><b>Governance Type:</b> ${properties['GovType']}
             <br><b>Governing Body:</b> ${properties['GoverningB']}
             <br><b>How Leadership is Chosen:</b> ${properties['New_Mechan']}
-            <br><b> Average Compensation for Leadership:</b> $${properties['AvgComp']}
-            <br><b>Next Election Year:</b> ${properties['Upcoming Election Year']}
+            <br><b> Average Compensation for Leadership:</b> ${properties['AvgComp']}
+            <br><b>Next Election Year:</b> ${properties['UpcomingEl']}
             <br>
             <br><b>Comparing Population and Leadership</b>
             <table style="width:100%">
@@ -938,10 +937,10 @@ function createInfoPanel(){
                 <b>${properties['name']}</b>
                 <br><a href="${properties['URL']}"target="_blank"><div class="links">Water System Website</a></div>
                 <br>Water Systems are required to publish Consumer Confidence Reports that report water sources and water quality results for regulated contaminants. 
-                <br><a href="https://innovation.luskin.ucla.edu/target="_blank"><div class="links">Consumer Confidence Report</a></div>
-                <br><b>Service Connections</b> ${properties['Connections']}
+                <br><a href="${properties['CCR']}"target"_blank"><div class="links">Consumer Confidence Report</a></div>
+                <br><b>Service Connections</b> ${properties['connections_Connections']}
                 <br><b>System Population:</b> ${properties['TableData_']}
-                <br><b>Median Household Income:</b> $${properties['Median']}
+                <br><b>Median Household Income:</b> ${properties['Median']}
                 <br>
                 <br><b>Governance Information</b>
                 <br>To learn more about governance types read the 
@@ -949,8 +948,8 @@ function createInfoPanel(){
                 <br><b>Governance Type:</b> ${properties['GovType']}
                 <br><b>Governing Body:</b> ${properties['GoverningB']}
                 <br><b>How Leadership is Chosen:</b> ${properties['New_Mechan']}
-                <br><b> Average Compensation for Leadership:</b> $${properties['AvgComp']}
-                <br><b>Next Election Year:</b> ${properties['Upcoming Election Year']}
+                <br><b> Average Compensation for Leadership:</b> ${properties['AvgComp']}
+                <br><b>Next Election Year:</b> ${properties['UpcomingEl']}
                 <br>
                 <br><b>Comparing Population and Leadership</b>
                 <table style="width:100%">
@@ -971,39 +970,39 @@ function createInfoPanel(){
 
        else if(fieldtomap == 'Service_Co'){
         this._div.innerHTML =`
-        <p style="color:black;font-size:14px;line-height:1em;">
-        <b>${properties['name']}</b>
-        <br><a href="${properties['URL']}"target="_blank"><div class="links">Water System Website</a></div>
-        <br>Water Systems are required to publish Consumer Confidence Reports that report water sources and water quality results for regulated contaminants. 
-        <br><a href="https://innovation.luskin.ucla.edu/target="_blank"><div class="links">Consumer Confidence Report</a></div>
-        <br><b>Service Connections</b> ${properties['Connections']}
-        <br><b>System Population:</b> ${properties['TableData_']}
-        <br><b>Median Household Income:</b> $${properties['Median']}
-        <br>
-        <br><b>Governance Information</b>
-        <br>To learn more about governance types read the 
-        <br><a href="https://innovation.luskin.ucla.edu/" target="_blank"><div class="links">LA County Water System Performance Guide</a></div>
-        <br><b>Governance Type:</b> ${properties['GovType']}
-        <br><b>Governing Body:</b> ${properties['GoverningB']}
-        <br><b>How Leadership is Chosen:</b> ${properties['New_Mechan']}
-        <br><b> Average Compensation for Leadership:</b> $${properties['AvgComp']}
-        <br><b>Next Election Year:</b> ${properties['Upcoming Election Year']}
-        <br>
-        <br><b>Comparing Population and Leadership</b>
-        <table style="width:100%">
-        <tr>
-        <th>Population</th>
-        <th>Leadership</th>
-        </tr>
-        <tr>
-        <td><div id="apexchart"></td>
-        <td><div id="Leader"></td>
-        </tr>
-        </table>
-        <br>To learn more about representation in
-        LA County water system leadership read the Luskin Center for Innovation's report on <a href="https://innovation.luskin.ucla.edu/wp-content/uploads/2021/06/Urban-Drinking-Water-Governing-Bodies.pdf" target="_blank"><div class="links">Urban Drinking Water Governing Bodies</a></div>
-
-        </div></p>
+            <p style="color:black;font-size:14px;line-height:1em;">
+            <b>${properties['name']}</b>
+            <br><a href="${properties['URL']}"target="_blank"><div class="links">Water System Website</a></div>
+            <br>Water Systems are required to publish Consumer Confidence Reports that report water sources and water quality results for regulated contaminants. 
+            <br><a href="${properties['CCR']}"target"_blank"><div class="links">Consumer Confidence Report</a></div>
+            <br><b>Service Connections</b> ${properties['connections_Connections']}
+            <br><b>System Population:</b> ${properties['TableData_']}
+            <br><b>Median Household Income:</b> ${properties['Median']}
+            <br>
+            <br><b>Governance Information</b>
+            <br>To learn more about governance types read the 
+            <br><a href="https://innovation.luskin.ucla.edu/" target="_blank"><div class="links">LA County Water System Performance Guide</a></div>
+            <br><b>Governance Type:</b> ${properties['GovType']}
+            <br><b>Governing Body:</b> ${properties['GoverningB']}
+            <br><b>How Leadership is Chosen:</b> ${properties['New_Mechan']}
+            <br><b> Average Compensation for Leadership:</b> ${properties['AvgComp']}
+            <br><b>Next Election Year:</b> ${properties['UpcomingEl']}
+            <br>
+            <br><b>Comparing Population and Leadership</b>
+            <table style="width:100%">
+            <tr>
+            <th>Population</th>
+            <th>Leadership</th>
+            </tr>
+            <tr>
+            <td><div id="apexchart"></td>
+            <td><div id="Leader"></td>
+            </tr>
+            </table>
+            <br>To learn more about representation in
+            LA County water system leadership read the Luskin Center for Innovation's report on <a href="https://innovation.luskin.ucla.edu/wp-content/uploads/2021/06/Urban-Drinking-Water-Governing-Bodies.pdf" target="_blank"><div class="links">Urban Drinking Water Governing Bodies</a></div>
+    
+            </div></p>
                 
                 ` }    
         else if(fieldtomap == 'WaterBill'){
@@ -1012,14 +1011,14 @@ function createInfoPanel(){
             <b>${properties['name']}</b>
             <br><a href="${properties['URL']}"target="_blank"><div class="links">Water System Website</a></div>
             <br>Water Systems are required to publish Consumer Confidence Reports that report water sources and water quality results for regulated contaminants. 
-            <br><a href="https://innovation.luskin.ucla.edu/target="_blank"><div class="links">Consumer Confidence Report</a></div>
-            <br><b>Service Connections</b> ${properties['Connections']}
+            <br><a href="${properties['CCR']}"target"_blank"><div class="links">Consumer Confidence Report</a></div>
+            <br><b>Service Connections</b> ${properties['connections_Connections']}
             <br><b>System Population:</b> ${properties['TableData_']}
-            <br><b>Median Household Income:</b> $${properties['Median']}
+            <br><b>Median Household Income:</b> ${properties['Median']}
             <br>
                 <br><b>Water Bill Information</b>
                 <br>
-                <br><b>Average Water Bill:</b> $${properties['WaterBill']}
+                <br><b>Average Water Bill:</b> ${properties['Bill_Panel']}
                 <br>
                 <br>My water bill is <b>${properties['Perc']}% ${properties['OU']}</b> the average bill in
                 <br> Los Angeles County.
@@ -1034,14 +1033,14 @@ function createInfoPanel(){
             <b>${properties['name']}</b>
             <br><a href="${properties['URL']}"target="_blank"><div class="links">Water System Website</a></div>
             <br>Water Systems are required to publish Consumer Confidence Reports that report water sources and water quality results for regulated contaminants. 
-            <br><a href="https://innovation.luskin.ucla.edu/target="_blank"><div class="links">Consumer Confidence Report</a></div>
-            <br><b>Service Connections</b> ${properties['Connections']}
+            <br><a href="${properties['CCR']}"target"_blank"><div class="links">Consumer Confidence Report</a></div>
+            <br><b>Service Connections</b> ${properties['connections_Connections']}
             <br><b>System Population:</b> ${properties['TableData_']}
-            <br><b>Median Household Income:</b> $${properties['Median']}
+            <br><b>Median Household Income:</b> ${properties['Median']}
             <br>
                 <br><b>Water Bill Information</b>
                 <br>
-                <br><b>Average Water Bill:</b> $${properties['WaterBill']}
+                <br><b>Average Water Bill:</b> ${properties['Bill_Panel']}
                 <br>
                 <br>My water bill is <b>${properties['Perc']}% ${properties['OU']}</b> the average bill in
                 <br> Los Angeles County.
@@ -1056,14 +1055,14 @@ function createInfoPanel(){
             <b>${properties['name']}</b>
             <br><a href="${properties['URL']}"target="_blank"><div class="links">Water System Website</a></div>
             <br>Water Systems are required to publish Consumer Confidence Reports that report water sources and water quality results for regulated contaminants. 
-            <br><a href="https://innovation.luskin.ucla.edu/target="_blank"><div class="links">Consumer Confidence Report</a></div>
-            <br><b>Service Connections</b> ${properties['Connections']}
+            <br><a href="${properties['CCR']}"target"_blank"><div class="links">Consumer Confidence Report</a></div>
+            <br><b>Service Connections</b> ${properties['connectiond_Connections']}
             <br><b>System Population:</b> ${properties['TableData_']}
-            <br><b>Median Household Income:</b> $${properties['Median']}
+            <br><b>Median Household Income:</b> ${properties['Median']}
             <br>
                 <br><b>Water System Performance</b>
                 <br>
-                <br><b>Primary water source:</b> ${properties['Source_Source']}
+                <br><b>Primary water source:</b> ${properties['PWS']}
                 <br>
                 <br><b>Required System Operator Level:</b> ${properties['ReqOp']}
                 <br><b>Current System Operator Level:</b> ${properties['HighestOp']}
@@ -1078,14 +1077,14 @@ function createInfoPanel(){
             <b>${properties['name']}</b>
             <br><a href="${properties['URL']}"target="_blank"><div class="links">Water System Website</a></div>
             <br>Water Systems are required to publish Consumer Confidence Reports that report water sources and water quality results for regulated contaminants. 
-            <br><a href="https://innovation.luskin.ucla.edu/target="_blank"><div class="links">Consumer Confidence Report</a></div>
-            <br><b>Service Connections</b> ${properties['Connections']}
+            <br><a href="${properties['CCR']}"target"_blank"><div class="links">Consumer Confidence Report</a></div>
+            <br><b>Service Connections</b> ${properties['connections_Connections']}
             <br><b>System Population:</b> ${properties['TableData_']}
-            <br><b>Median Household Income:</b> $${properties['Median']}
+            <br><b>Median Household Income:</b> ${properties['Median']}
             <br>
                 <br><b>Water System Performance</b>
                 <br>
-                <br><b>Primary water source:</b> ${properties['Source_Source']}
+                <br><b>Primary water source:</b> ${properties['PWS']}
                 <br>
                 <br><b>Required System Operator Level:</b> ${properties['ReqOp']}
                 <br><b>Current System Operator Level:</b> ${properties['HighestOp']}
@@ -1100,14 +1099,14 @@ function createInfoPanel(){
             <b>${properties['name']}</b>
             <br><a href="${properties['URL']}"target="_blank"><div class="links">Water System Website</a></div>
             <br>Water Systems are required to publish Consumer Confidence Reports that report water sources and water quality results for regulated contaminants. 
-            <br><a href="https://innovation.luskin.ucla.edu/target="_blank"><div class="links">Consumer Confidence Report</a></div>
-            <br><b>Service Connections</b> ${properties['Connections']}
+            <br><a href="${properties['CCR']}"target"_blank"><div class="links">Consumer Confidence Report</a></div>
+            <br><b>Service Connections</b> ${properties['connections_Connections']}
             <br><b>System Population:</b> ${properties['TableData_']}
-            <br><b>Median Household Income:</b> $${properties['Median']}
+            <br><b>Median Household Income:</b> ${properties['Median']}
             <br>
                 <br><b>Water System Performance</b>
                 <br>
-                <br><b>Primary water source:</b> ${properties['Source_Source']}
+                <br><b>Primary water source:</b> ${properties['PWS']}
                 <br>
                 <br><b>Required System Operator Level:</b> ${properties['ReqOp']}
                 <br><b>Current System Operator Level:</b> ${properties['HighestOp']}
@@ -1122,14 +1121,14 @@ function createInfoPanel(){
             <b>${properties['name']}</b>
             <br><a href="${properties['URL']}"target="_blank"><div class="links">Water System Website</a></div>
             <br>Water Systems are required to publish Consumer Confidence Reports that report water sources and water quality results for regulated contaminants. 
-            <br><a href="https://innovation.luskin.ucla.edu/target="_blank"><div class="links">Consumer Confidence Report</a></div>
-            <br><b>Service Connections</b> ${properties['Connections']}
+            <br><a href="${properties['CCR']}"target"_blank"><div class="links">Consumer Confidence Report</a></div>
+            <br><b>Service Connections</b> ${properties['connections_Connections']}
             <br><b>System Population:</b> ${properties['TableData_']}
-            <br><b>Median Household Income:</b> $${properties['Median']}
+            <br><b>Median Household Income:</b> ${properties['Median']}
             <br>
                 <br><b>Water System Performance</b>
                 <br>
-                <br><b>Primary water source:</b> ${properties['Source_Source']}
+                <br><b>Primary water source:</b> ${properties['PWS']}
                 <br>
                 <br><b>Required System Operator Level:</b> ${properties['ReqOp']}
                 <br><b>Current System Operator Level:</b> ${properties['HighestOp']}
