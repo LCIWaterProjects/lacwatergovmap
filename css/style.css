@@ -2,6 +2,7 @@ body,html {
     margin:0;
     height:100%;
     width:100%;
+   
 }
 
 #map {
@@ -14,24 +15,34 @@ body,html {
 body {
     display:grid;
     grid-template-rows: 60px 1fr ;
-    grid-template-columns: 300px 1fr;
+    grid-template-columns: 310px 1fr;
+   
     grid-template-areas: 
-    "header header headerbuttons"
+    "header header header"
     "sidebar content content"
     "sidebar content content"
     "footer footer footer";
+    
    
 }
 
 .header {
-    text-align: left;
+    text-align: left; 
     grid-area: header;
-    padding:10px;
+    overflow: clip;
     background-color: #005687;
     color: white;
     font-size: 2em;
-    max-width: 50%;
-    z-index: 1;
+    
+    max-width: 100%;
+    max-height: 100%;
+    white-space: nowrap;
+   padding: 10px;
+    
+    
+
+   
+    
 
 }
 .headerbuttons {
@@ -41,17 +52,18 @@ body {
     background-color: #005687;
     color: white;
     font-size: 2em;
-    max-width: 100%;
+    max-width: 50%;
+    
 
 }
 
 a{
-    text-align: center;
+    text-align: right;
     grid-area: header;
     padding:10px;
     
     color: white;
-    font-size: 0.75em;
+    font-size: 0.65em;
 
 }
 .legend {
@@ -86,11 +98,12 @@ a{
 }
 .sidebar {
     line-height: 2.6em;
+    width:auto;
     color: #444;
     grid-area: sidebar;
     padding:10px;
     background-color: #ffffff;
-    /*overflow:scroll; /* allows the sidebar to overflow with a scrollbar */
+    overflow:scroll; /* allows the sidebar to overflow with a scrollbar */
 }
 
 .sidebar-title {
@@ -229,11 +242,17 @@ overflow: auto;
     margin-right: auto;
 }
 
+.img{
+font-size: 20px;
+
+}
+
 img.figure {
     display: block;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
+    font-size: 14px;
 }
 
 button {
@@ -276,6 +295,7 @@ b {
 .footertable{font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: 100%;}
 #text{font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: 100%;}
 #Introtext{font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: 100%;}
+#img{font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: 100%;}
 
 /* Dropdown Button */
 .dropbtn {
